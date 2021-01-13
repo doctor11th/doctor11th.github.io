@@ -1,0 +1,49 @@
+* {
+    user-select: none;
+}
+
+HTML, body {
+    background-color: #8faadc;
+    height: 88%;
+}
+
+div.test {
+    height: 100%;
+}
+
+div.in {
+    position: relative;
+    top: 30%;
+    margin: 100px auto;
+    width: 35%;
+    transform: translateY(-50%);
+    background-color: rgb(68, 114, 196);
+}
+
+div.in div {
+    margin: 30px 85px;
+    /*border: black solid 1px;*/
+}
+
+input.forText {
+    background-color: rgba(1, 1, 1, 0);
+    border-style: hidden hidden solid;
+    border-color: rgb(199, 191, 219);
+    border-width: 3px;
+    width: 90%;
+    outline: none;
+    margin: 10px auto 10px 0;
+}
+
+::-webkit-input-placeholder {
+    color: aliceblue;
+}
+
+input.subButton {
+    margin: 10px 0 20px 20%;
+}
+
+span.titleSty {
+    text-align: center;
+    font-size: 30px;
+}
