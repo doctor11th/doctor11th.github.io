@@ -1,10 +1,19 @@
 * {
     user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 HTML, body {
     background-color: #8faadc;
     height: 88%;
+}
+
+span.titleSty {
+    text-align: center;
+    font-size: 30px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 div.test {
@@ -41,9 +50,4 @@ input.forText {
 
 input.subButton {
     margin: 10px 0 20px 20%;
-}
-
-span.titleSty {
-    text-align: center;
-    font-size: 30px;
 }
