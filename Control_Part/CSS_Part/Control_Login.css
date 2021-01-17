@@ -42,6 +42,7 @@ input.forText {
     width: 90%;
     outline: none;
     margin: 10px auto 10px 0;
+    color: aliceblue;
 }
 
 ::-webkit-input-placeholder {
