@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"
+          xmlns:th="https://www.thymeleaf.org">
+    <title>Title</title>
+
+    <style>
+        video{
+            width: 50%;
+            height: 50%;
+            margin: 30px auto;
+            background-color: aquamarine;
+            display: block;
+        }
+
+        button{
+            margin-top: 30px;
+            border: white;
+            font-size: 60px;
+        }
+    </style>
+    <script src="https://www.jq22.com/jquery/jquery-3.3.1.js"></script>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div style="text-align: center;margin-top: 30px;font-size: 30px">
+        {{msgs}}
+    </div>
+    <button style="border-radius: 50%;position: absolute;width: 80px;height: 80px;
+    margin-top: 430px;font-size: 20px;margin-left: 1100px" @click="retu">
+        {{ret}}
+    </button>
+</div>
+<video id="video"></video>
+<canvas id="canvas" style="display: none;"></canvas>
+
+
+<script>
+    let vm=new Vue({
+        el:'#app',
+        data:{
+            ret: '返回',
+            msgs: '借书人脸识别'
+        },
+        methods:{
+            retu(){
+                let ul="library_computer.html"
+                window.location.href = ul
+            }
+        }
+    })
+
+    var video = document.getElementById('video');
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    var mediaStreamTrack=null;
+
+    if (navigator.mediaDevices.getUserMedia) {
+        //最新的标准API
+        navigator.mediaDevices.getUserMedia({video : {width: 1000, height: 1000}}).then(success).catch(error);
+    } else if (navigator.webkitGetUserMedia) {
+        //webkit核心浏览器
+        navigator.webkitGetUserMedia({video : {width: 1000, height: 1000}},success, error)
+    } else if (navigator.mozGetUserMedia) {
+        //firfox浏览器
+        navigator.mozGetUserMedia({video : {width: 1000, height: 1000}}, success, error);
+    } else if (navigator.getUserMedia) {
+        //旧版API
+        navigator.getUserMedia({video : {width: 1000, height: 1000}}, success, error);
+    }
+
+    function success(stream) {
+        //兼容webkit核心浏览器
+        // let CompatibleURL = window.URL || window.webkitURL;
+
+        //将视频流设置为video元素的源
+        console.log(stream);
+
+        //video.src = CompatibleURL.createObjectURL(stream);
+        video.srcObject = stream;
+        video.play();
+    }
+
+    function error(error) {
+        console.log(`访问用户媒体设备失败${error.name}, ${error.message}`);
+    }
+
+    function getFace() {
+        context.drawImage(video,0,0,300,150);
+        this.img=canvas.toDataURL('image/jpg')
+        //获取完整的base64编码
+        this.img=img.split(',')[1];
+        return this.img;
+    }
+
+
+    function Facelogin() {
+        img = getFace();
+        $.ajax({
+            type:"post",
+            url:"http://localhost:8080/boot/data/set",
+            data:{
+                "img":img,
+            },
+            success:function (data) {
+                if (data.flag){
+                    let ul="er_borrow.html?name="+data.name.user_id
+                    // alert(data.name.user_id)
+                    window.location.href = ul
+                } else {
+                     // window.location.href = "http://localhost:8080/boot/wha"
+                }
+            },
+            async:true
+        })
+    }
+
+    setInterval(Facelogin,2000);
+</script>
+</body>
+</html>
